@@ -5,21 +5,10 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { login, logout, onUserStateChange } from "../api/firebase";
 import User from "./User";
 import Button from "./ui/Button";
+import { useAuthContext } from "./context/AuthContext";
 
 export default function Navbar() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    onUserStateChange(
-      //(user) => {setUser(user);}
-      //전달받는 인자와 호출에 전달하는 인자가 같으므로
-      //setUser
-      (user) => {
-        console.log(user);
-        setUser(user);
-      }
-    );
-  }, []);
+  const { user, login, logout } = useAuthContext();
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2">

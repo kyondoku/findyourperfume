@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { v4 as uuidv4 } from "uuid";
 import {
   getAuth,
   signInWithPopup,
@@ -6,7 +7,8 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { child, get, getDatabase, ref } from "firebase/database";
+import { get, getDatabase, ref, set } from "firebase/database";
+import { uploadAsset } from "./cloudinary";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -38,6 +40,19 @@ export function onUserStateChange(callback) {
     // 1. 로그인한 경우
     const updatedUser = user ? await checkIsAdmin(user) : null;
     callback(updatedUser);
+  });
+}
+
+export async function addItem(item, image) {
+  const productId = uuidv4();
+  set(ref(db, `products/${productId}`), {
+    ...item,
+    productId,
+    price: parseInt(product.price),
+    image,
+    options: item.options.split(","),
+  }).then(() => {
+    // uploadAsset(productId, item.image.value);
   });
 }
 

@@ -8,7 +8,6 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { get, getDatabase, ref, set } from "firebase/database";
-import { uploadAsset } from "./cloudinary";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -45,10 +44,10 @@ export function onUserStateChange(callback) {
 
 export async function addItem(item, image) {
   const productId = uuidv4();
-  set(ref(db, `products/${productId}`), {
+  return set(ref(db, `products/${productId}`), {
     ...item,
     productId,
-    price: parseInt(product.price),
+    price: parseInt(item.price),
     image,
     options: item.options.split(","),
   }).then(() => {
@@ -68,5 +67,14 @@ async function checkIsAdmin(user) {
       return { ...user, isAdmin };
     }
     return user;
+  });
+}
+
+export async function getProducts() {
+  return get(ref(db, "products")).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
   });
 }

@@ -1,14 +1,15 @@
 import React from "react";
 import { getItems } from "../api/firebase";
+import Banner from "../components/Banner";
+import Products from "../components/Products";
 
 export default function Home() {
   //   const itemList = getItems();
   //   console.log(itemList);
   return (
-    <ul>
-      {/* {itemList.map((item) => (
-        <li key={item.productId}>{item.title}</li>
-      ))} */}
-    </ul>
+    <section>
+      <Banner />
+      <Products />
+    </section>
   );
 }

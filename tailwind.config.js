@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         brand: "#352F44",
       },
+      backgroundImage: {
+        banner: `url('../public/images/findyourperfume_banner.png')`,
+      },
     },
   },
   plugins: [],

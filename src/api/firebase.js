@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { get, getDatabase, ref, set } from "firebase/database";
+import { get, getDatabase, ref, remove, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -55,6 +55,20 @@ export async function addItem(item, image) {
   });
 }
 
+// export async function addCart() {
+//   console.log(auth);
+//   const uid = auth.uid;
+//   return set(ref(db, `carts/${uid}/${productId}`), {
+//     ...item,
+//     productId,
+//     price: parseInt(item.price),
+//     image,
+//     options: item.options.split(","),
+//   }).then(() => {
+//     // uploadAsset(productId, item.image.value);
+//   });
+// }
+
 // 네트워크 통신을 필요로 하니까 async
 async function checkIsAdmin(user) {
   // 2. 어드민 권한여부 체크
@@ -77,4 +91,20 @@ export async function getProducts() {
     }
     return [];
   });
+}
+
+export async function getCart(userId) {
+  return get(ref(db, `carts/${userId}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    return Object.values(items);
+  });
+}
+
+export async function updateCart(userId, product) {
+  console.log(product);
+  return set(ref(db, `carts/${userId}/${product.productId}`), product);
+}
+
+export async function removeCart(userId, productId) {
+  return remove(ref(db, `carts/${userId}/${productId}`));
 }

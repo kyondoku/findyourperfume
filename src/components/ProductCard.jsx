@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({
   product,
-  product: { id, image, title, brand, price },
+  product: { productId, image, title, brand, price },
 }) {
   const navigate = useNavigate();
   return (
     <li
       onClick={() => {
-        navigate(`/products/${id}`, { state: { product } });
+        navigate(`/products/${productId}`, { state: { product } });
       }}
       className="rounded-lg shadow-md overflow-hidden cursor-pointer transition-all hover:scale-105"
     >

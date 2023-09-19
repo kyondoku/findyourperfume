@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { uploadAsset } from "../api/cloudinary";
 import { addItem } from "../api/firebase";
@@ -8,6 +9,11 @@ export default function NewProducts() {
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+
+  const queryClinet = useQueryClient();
+  const addProduct = useMutation(({ product, url }) => addItem(product, url), {
+    onSuccess: () => queryClinet.invalidateQueries(["products"]),
+  });
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -23,12 +29,17 @@ export default function NewProducts() {
     // 제품의 사진을 cloudinary에 업로드, url 획득
     uploadAsset(file)
       .then((url) => {
-        addItem(product, url).then(() => {
-          setSuccess("성공적으로 상품이 추가되었습니다.");
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-        });
+        addProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess("성공적으로 상품이 추가되었습니다.");
+              setTimeout(() => {
+                setSuccess(null);
+              }, 4000);
+            },
+          }
+        );
       })
       .finally(() => setIsUploading(false));
     // Firebase에 새로운 상품을 추가

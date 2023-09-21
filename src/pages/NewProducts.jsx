@@ -1,19 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { uploadAsset } from "../api/cloudinary";
-import { addItem } from "../api/firebase";
 import Button from "../components/ui/Button";
+import useProducts from "../hooks/useProducts";
 
 export default function NewProducts() {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
-
-  const queryClinet = useQueryClient();
-  const addProduct = useMutation(({ product, url }) => addItem(product, url), {
-    onSuccess: () => queryClinet.invalidateQueries(["products"]),
-  });
+  const { addProduct } = useProducts();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;

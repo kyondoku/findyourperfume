@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#352F44",
+        brand: "#000000",
       },
       backgroundImage: {
         banner: `url('../public/images/findyourperfume_banner.png')`,

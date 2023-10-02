@@ -11,10 +11,7 @@ export function AuthContextProvider({ children }) {
       //(user) => {setUser(user);}
       //전달받는 인자와 호출에 전달하는 인자가 같으므로
       //setUser
-      (user) => {
-        console.log(user);
-        setUser(user);
-      }
+      (user) => setUser(user)
     );
   }, []);
 

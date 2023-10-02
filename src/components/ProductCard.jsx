@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({
   product,
-  product: { productId, image, title, brand, price },
+  product: { productId, image, title, sex, price },
 }) {
   const navigate = useNavigate();
   return (
@@ -11,15 +11,14 @@ export default function ProductCard({
       onClick={() => {
         navigate(`/products/${productId}`, { state: { product } });
       }}
-      className="rounded-lg shadow-md overflow-hidden cursor-pointer transition-all hover:scale-105"
+      className="overflow-hidden cursor-pointer"
     >
-      <img className="w-full" src={image} alt={title} />
-      <div className="mt-2 px-2 text-lg flex justify-between items-center">
-        <h3 className="truncate">{title}</h3>
-        <p>{`₩${price}`}</p>
+      <img className="w-full h-5/6" src={image} alt={title} />
+      <div className="mt-4 px-2 text-sm flex justify-between items-center">
+        <h3 className="text-gray-500 truncate">{title}</h3>
+        <p>{`₩${price.toLocaleString()}`}</p>
       </div>
-
-      <p className="mb-2 px-2 text-gray-600">{brand}</p>
+      <p className="text-xs mt-1 px-2 ">{sex == "M" ? "남성" : "여성"}</p>
     </li>
   );
 }

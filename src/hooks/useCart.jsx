@@ -4,25 +4,27 @@ import {
   updateCart as fetchUpdateCart,
   removeCart as fetchRemoveCart,
 } from "../api/firebase";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function useCart() {
+  const { uid } = useAuthContext();
   const queryClient = useQueryClient();
 
-  const cartQuery = useQuery(["carts"], fetchCarts, {
-    staleTime: 1000 * 60,
+  const cartQuery = useQuery(["carts", uid || ""], () => fetchCarts(uid), {
+    enabled: !!uid, // uid가 있을경우에만 해당 쿼리가 수행되도록
   });
 
-  const updateCart = useMutation(
-    ({ userId, product }) => fetchUpdateCart(userId, product),
-    {
-      onSuccess: () => queryClient.invalidateQueries(["carts"]),
-    }
-  );
+  const updateCart = useMutation((product) => fetchUpdateCart(uid, product), {
+    onSuccess: () => queryClient.invalidateQueries(["carts", uid]),
+  });
 
   const removeCart = useMutation(
-    ({ userId, productId }) => fetchRemoveCart(userId, productId),
+    (productId) => {
+      console.log(productId);
+      fetchRemoveCart(uid, productId);
+    },
     {
-      onSuccess: () => queryClient.invalidateQueries(["carts"]),
+      onSuccess: () => queryClient.invalidateQueries(["carts", uid]),
     }
   );
 

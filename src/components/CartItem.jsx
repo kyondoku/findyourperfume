@@ -7,17 +7,19 @@ const ICON_CLASS =
 export default function CartItem({
   product,
   product: { productId, image, title, option, quantity, price },
-  uid,
 }) {
   const { updateCart, removeCart } = useCart();
   const handleMinus = () => {
     if (quantity < 2) return;
-    updateCart(uid, { ...product, quantity: quantity - 1 });
+    updateCart.mutate({ ...product, quantity: quantity - 1 });
   };
   const handlePlus = () =>
-    updateCart(uid, { ...product, quantity: quantity + 1 });
+    updateCart.mutate({ ...product, quantity: quantity + 1 });
 
-  const handleDelete = () => removeCart(uid, productId);
+  const handleDelete = () => {
+    console.log(productId);
+    removeCart.mutate(productId);
+  };
 
   return (
     <li className="flex justify-between my-2 items-center">
@@ -26,7 +28,7 @@ export default function CartItem({
         <div className="basis-3/5">
           <p className="text-lg">{title}</p>
           <p className="text-xl font-bold text-brand">{option}</p>
-          <p>₩{price}</p>
+          <p>₩{price.toLocaleString()}</p>
         </div>
         <div className="text-2xl flex items-center">
           <AiOutlineMinusSquare className={ICON_CLASS} onClick={handleMinus} />

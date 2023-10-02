@@ -106,5 +106,8 @@ export async function updateCart(userId, product) {
 }
 
 export async function removeCart(userId, productId) {
+  console.log("dddd");
+  console.log(userId);
+  console.log(productId);
   return remove(ref(db, `carts/${userId}/${productId}`));
 }

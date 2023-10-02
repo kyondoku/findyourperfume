@@ -75,9 +75,9 @@ export default function NewProducts() {
         />
         <input
           type="text"
-          name="brand"
-          value={product.brand ?? ""}
-          placeholder="브랜드"
+          name="sex"
+          value={product.sex ?? ""}
+          placeholder="M/W"
           onChange={handleChange}
         />
         <input
@@ -92,6 +92,13 @@ export default function NewProducts() {
           name="options"
           value={product.options ?? ""}
           placeholder="옵션(콤마(,)로 구분"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="promotion"
+          value={product.promotion ?? ""}
+          placeholder="Y/N(메인페이지 배너 포함여부)"
           onChange={handleChange}
         />
         <Button

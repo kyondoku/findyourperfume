@@ -15,7 +15,7 @@ export default function ProductCard({
       }}
       className="overflow-hidden cursor-pointer"
     >
-      <img className="w-full h-4/5" src={image} alt={title} />
+      <img className="w-full" src={image} alt={title} />
       <div className="flex justify-between text-xs my-2 text-gray-500">
         <p>{sex == "M" ? "MEN" : "WOMEN"}</p>
         <p>

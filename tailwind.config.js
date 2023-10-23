@@ -4,11 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#000000",
+        brand: "red",
       },
-      backgroundImage: {
-        banner: `url('../public/images/findyourperfume_banner.png')`,
-      },
+      backgroundImage: {},
     },
   },
   plugins: [],

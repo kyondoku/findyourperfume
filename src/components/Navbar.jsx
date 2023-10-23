@@ -12,17 +12,17 @@ export default function Navbar() {
   const { user, login, logout } = useAuthContext();
 
   return (
-    <header className="flex justify-between border-b text-white border-gray-300 p-4 bg-black">
-      <div>
-        <Link
-          to="/"
-          className="flex items-center text-3xl font-extralight mb-3"
-        >
-          <h1>TOPELEVEN</h1>
+    <header className="flex justify-between border-b border-gray-300 p-4 font-['roboto']">
+      <div className="flex items-center">
+        <Link to="/">
+          <img
+            src="https://simage-kr.uniqlo.com/nq/img/logo_2021.svg"
+            alt="logo"
+          />
         </Link>
-        <div className="space-x-6">
-          <Link to="/products/men">남성</Link>
-          <Link to="/products/women">여성</Link>
+        <div className="ml-10 space-x-6 text-lg font-black">
+          <Link to="/products/men">MEN</Link>
+          <Link to="/products/women">WOMEN</Link>
         </div>
       </div>
       <nav className="flex items-center gap-4 font-semibold">
@@ -31,7 +31,8 @@ export default function Navbar() {
             <CartStatus />
           </Link>
         )}
-        {user && user.isAdmin && (
+        {/* {user && user.isAdmin && ( */}
+        {user && (
           <Link to="/products/new" className="text-2xl">
             <BsFillPencilFill />
           </Link>
